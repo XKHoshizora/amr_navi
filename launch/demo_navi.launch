@@ -22,15 +22,19 @@
     </node>
 
     <!-- map_sever -->
-    <!-- <node name="map_server" pkg="map_server" type="map_server" args="$(find amr_slam)/map/amr_map.yaml" /> -->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find amr_slam)/map/map.yaml" />
 
     <!-- amcl -->
     <node name="amcl" pkg="amcl" type="amcl" />
 
+    <!-- RViz 显示 -->
+    <!-- <node name="rviz" pkg="rviz" type="rviz" args="-d $(find amr_navi)/config/rviz/nav.rviz" /> -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find amr_navi)/config/rviz/map_tool.rviz" />
+
     <!-- wp_navi_server -->
-    <!-- <node name="wp_navi_server" pkg="waterplus_map_tools" type="wp_navi_server" output="screen" /> -->
+    <node name="wp_navi_server" pkg="waterplus_map_tools" type="wp_navi_server" output="screen" />
 
     <!-- wp_manager -->
-    <!-- <node name="wp_manager" pkg="waterplus_map_tools" type="wp_manager" output="screen" /> -->
+    <node name="wp_manager" pkg="waterplus_map_tools" type="wp_manager" output="screen" />
 
 </launch>
