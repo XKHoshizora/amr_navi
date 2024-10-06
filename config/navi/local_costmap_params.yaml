@@ -1,14 +1,14 @@
 local_costmap:
-  global_frame: odom
-  robot_base_frame: base_footprint
-  static_map: false
-  rolling_window: true
-  width: 3.0
-  height: 3.0
-  update_frequency: 10.0
-  publish_frequency: 10.0
-  transform_tolerance: 1.0
+  global_frame: odom           # 局部代价地图的参考坐标系为里程计odom
+  robot_base_frame: base_footprint  # 机器人的基准坐标系为base_footprint
+  static_map: false            # 局部地图不使用静态地图，动态更新
+  rolling_window: true         # 使用滚动窗口，使得局部地图随机器人移动
+  width: 2.5                   # 局部地图的宽度调小为2.5米，更适合你的AMR和工厂环境
+  height: 2.5                  # 局部地图的高度也相应调整为2.5米
+  update_frequency: 12.0        # 局部地图的更新频率提高到12.0 Hz，确保快速响应环境
+  publish_frequency: 10.0       # 地图发布频率保持10.0 Hz
+  transform_tolerance: 0.5      # TF转换的容忍时间减少到0.5秒，以提高实时性
 
 plugins:
-  - {name: obstacle_layer,      type: "costmap_2d::ObstacleLayer"}
-  - {name: inflation_layer,     type: "costmap_2d::InflationLayer"}
+  - {name: obstacle_layer,      type: "costmap_2d::ObstacleLayer"}  # 障碍物图层，用于动态检测障碍物
+  - {name: inflation_layer,     type: "costmap_2d::InflationLayer"} # 膨胀图层，增加障碍物的安全边界

@@ -1,28 +1,28 @@
 global_costmap:
-  global_frame: map
-  robot_base_frame: base_footprint
-  static_map: true
-  update_frequency: 1.0
-  publish_frequency: 1.0
-  transform_tolerance: 1.0
+  global_frame: map           # 全局地图的参考坐标系，通常使用静态地图生成的'map'
+  robot_base_frame: base_footprint  # 机器人的基准坐标系
+  static_map: true            # 使用静态地图进行导航，适合工厂环境
+  update_frequency: 2.0        # 更新频率调高到2.0 Hz，保证更频繁的更新，适合动态环境
+  publish_frequency: 1.0       # 发布频率保持1.0 Hz
+  transform_tolerance: 1.0     # TF转换的容忍时间保持1秒，确保在延迟存在时能正常工作
 
 recovery_behaviors:
   - name: 'conservative_reset'
-    type: 'clear_costmap_recovery/ClearCostmapRecovery'
+    type: 'clear_costmap_recovery/ClearCostmapRecovery'  # 保守重置行为，清除代价地图
   - name: 'rotate_recovery'
-    type: 'rotate_recovery/RotateRecovery'
+    type: 'rotate_recovery/RotateRecovery'               # 旋转恢复行为，机器人原地旋转以摆脱困境
   - name: 'aggressive_reset'
-    type: 'clear_costmap_recovery/ClearCostmapRecovery'
+    type: 'clear_costmap_recovery/ClearCostmapRecovery'  # 激进重置行为，用于彻底清除代价地图
 
 conservative_reset:
-  reset_distance: 2.0
-  layer_names: ["obstacle_layer"]
+  reset_distance: 1.0          # 保守重置距离调小为1米，更适合狭窄区域或细小障碍物的清除
+  layer_names: ["obstacle_layer"]  # 针对障碍物层进行重置
 
 aggressive_reset:
-  reset_distance: 0.0
+  reset_distance: 0.0          # 激进重置时完全清除代价地图的障碍物层
   layer_names: ["obstacle_layer"]
 
 plugins:
-  - {name: static_layer,            type: "costmap_2d::StaticLayer"}
-  - {name: obstacle_layer,          type: "costmap_2d::ObstacleLayer"}
-  - {name: inflation_layer,         type: "costmap_2d::InflationLayer"}
+  - {name: static_layer,            type: "costmap_2d::StaticLayer"}  # 静态图层，负责处理全局静态地图
+  - {name: obstacle_layer,          type: "costmap_2d::ObstacleLayer"} # 障碍物图层，负责动态障碍物检测
+  - {name: inflation_layer,         type: "costmap_2d::InflationLayer"} # 膨胀图层，用于增加障碍物的安全边界

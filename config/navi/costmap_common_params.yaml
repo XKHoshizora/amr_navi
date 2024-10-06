@@ -1,11 +1,11 @@
-robot_radius: 0.39
-inflation_radius: 0.78
-obstacle_range: 10.0
-raytrace_range: 10.0
-observation_sources: base_lidar
-base_lidar: {
-    data_type: LaserScan,
-    topic: /scan, 
-    marking: true, 
-    clearing: true
-    }
+robot_radius: 0.29        # 机器人半径，基于宽度57.8 cm的AMR，取宽度的一半加少许余量
+inflation_radius: 0.58    # 膨胀半径，确保机器人在障碍物周围留出一定的安全距离
+obstacle_range: 10.0      # 激光雷达检测障碍物的最大距离为10米，确保检测到较远的障碍物
+raytrace_range: 10.0      # 激光雷达射线追踪的最大范围，保持与obstacle_range一致
+observation_sources: base_lidar  # 指定使用的观测源为激光雷达
+base_lidar: {             # 基于激光雷达的设置
+    data_type: LaserScan,   # 使用LaserScan类型数据
+    topic: /filtered_scan,  # 过滤后的激光雷达数据话题，减少噪声影响
+    marking: true,          # 将障碍物标记到地图中
+    clearing: true          # 将清除激光雷达检测到的无障碍区域
+}
